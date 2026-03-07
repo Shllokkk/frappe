@@ -268,7 +268,9 @@ export default class ChartWidget extends Widget {
 	}
 
 	get_report_chart_data(result) {
-		if (result.chart && this.chart_doc.use_report_chart) {
+		if (result.error_message) {
+			return result;
+		} else if (result.chart && this.chart_doc.use_report_chart) {
 			return result.chart.data;
 		} else {
 			let y_fields = [];
@@ -854,7 +856,7 @@ export default class ChartWidget extends Widget {
 					}
 				} else if (this.chart_doc.chart_type == "Report") {
 					this.settings = {
-						method: "frappe.desk.query_report.run",
+						method: "frappe.desk.query_report.run_for_chart_widget",
 					};
 					return Promise.resolve();
 				} else {
